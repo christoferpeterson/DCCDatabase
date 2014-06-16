@@ -6,6 +6,8 @@ namespace DCCDatabase.News
 {
 	public class ManagedFeed : BaseDataModel
 	{
+		public const int DefaultPollRate = 15;
+
 		/// <summary>The display name of this feed
 		/// </summary>
 		[Required]
@@ -21,12 +23,13 @@ namespace DCCDatabase.News
 
 		/// <summary>When was this feed last polled?
 		/// </summary>
+		[UIHint("UI/Timestamp")]
 		public DateTime? LastPolled { get; set; }
 
 		/// <summary>Determines how often the feed should be polled
 		/// </summary>
 		[Required]
-		[DefaultValue(15)]
+		[DefaultValue(DefaultPollRate)]
 		[UIHint("Number")]
 		[Range(15, 1440)]
 		[Display(Name = "Poll Rate (in minutes)", Description = "Set how often this RSS feed gets polled in increments of 15 minimum is 15, maximum 1440 (1 day). Values will be rounded up to the nearest quarter hour." )]
@@ -46,5 +49,7 @@ namespace DCCDatabase.News
 		/// <summary>The default managed feed item
 		/// </summary>
 		public static ManagedFeed Default { get { return new ManagedFeed { PollRate = 15, Active = true }; } }
+
+		public DateTime NextPoll { get { return LastPolled.HasValue ? LastPolled.Value.AddMinutes(PollRate ?? DefaultPollRate) : DateTime.MinValue; } }
 	}
 }
