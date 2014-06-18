@@ -47,7 +47,6 @@
     <Compile Include="BaseDataModel.cs" />
     <Compile Include="News\ManagedFeed.cs" />
     <Compile Include="News\NewsArticle.cs" />
-    <Compile Include="News\RSSFeed.cs" />
     <Compile Include="News\RSSFeedItem.cs" />
     <Compile Include="News\RSSImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

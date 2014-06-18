@@ -34,6 +34,10 @@ namespace DCCDatabase.News
 		/// </summary>
 		public Guid? Guid { get; set; }
 
+		/// <summary>A unique identifier if the Guid doesn't exist or is malformatted
+		/// </summary>
+		public string UniqueID { get; set; }
+
 		/// <summary>Indicates when the item was published. http://validator.w3.org/feed/docs/rss2.html#ltpubdategtSubelementOfLtitemgt
 		/// </summary>
 		public DateTime? PublishDate { get; set; }
