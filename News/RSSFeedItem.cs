@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 
 namespace DCCDatabase.News
 {
@@ -45,5 +46,10 @@ namespace DCCDatabase.News
 		/// <summary>The RSS channel that the item came from. http://validator.w3.org/feed/docs/rss2.html#ltsourcegtSubelementOfLtitemgt
 		/// </summary>
 		public string Source { get; set; }
+
+		/// <summary>The source feed
+		/// </summary>
+		[ScriptIgnore]
+		public ManagedFeed Feed { get; set; }
 	}
 }
