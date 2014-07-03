@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,6 +43,11 @@ namespace DCCDatabase.News
 		/// <summary>Indicates when the item was published. http://validator.w3.org/feed/docs/rss2.html#ltpubdategtSubelementOfLtitemgt
 		/// </summary>
 		public DateTime? PublishDate { get; set; }
+
+		/// <summary>The timezone adjusted published date
+		/// </summary>
+		[NotMapped]
+		public DateTime? PublishDateAdjusted { get; set; }
 
 		/// <summary>The RSS channel that the item came from. http://validator.w3.org/feed/docs/rss2.html#ltsourcegtSubelementOfLtitemgt
 		/// </summary>
