@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DCCDatabase.News
 {
 	public class ManagedFeed : BaseDataModel
 	{
-		public const int DefaultPollRate = 15;
+		public const int MIN_POLL_RATE = 60;
+		public const int MAX_POLL_RATE = 1440;
 
 		/// <summary>The display name of this feed
 		/// </summary>
@@ -27,14 +30,31 @@ namespace DCCDatabase.News
 		[UIHint("UI/Timestamp")]
 		public DateTime? LastPolled { get; set; }
 
+		/// <summary>Adjust the poll date according to timezone
+		/// </summary>
+		[UIHint("UI/Timestamp")]
+		[NotMapped]
+		public DateTime? LastPolledAdjusted { get; set; }
+
 		/// <summary>Determines how often the feed should be polled
 		/// </summary>
 		[Required]
-		[DefaultValue(DefaultPollRate)]
+		[DefaultValue(MIN_POLL_RATE)]
 		[UIHint("Number")]
-		[Range(15, 1440)]
-		[Display(Name = "Poll Rate (in minutes)", Description = "Set how often this RSS feed gets polled in increments of 15 minimum is 15, maximum 1440 (1 day). Values will be rounded up to the nearest quarter hour." )]
-		public int? PollRate { get; set; }
+		[Display(Name = "Poll Rate (in minutes)", Description = "Set how often this RSS feed gets polled in increments of 60, min: 60 max: 1440 (1 day).")]
+		public int? PollRate 
+		{ 
+			get 
+			{
+				return _pollRate; 
+			}
+			set 
+			{
+				// keep the poll rate in range
+				_pollRate = value.HasValue ? Math.Max(MIN_POLL_RATE, Math.Min(MAX_POLL_RATE, value.Value)) : MIN_POLL_RATE;
+			}
+		}
+		private int _pollRate;
 
 		/// <summary>Mark whether this feed is actively being polled
 		/// </summary>
@@ -81,11 +101,52 @@ namespace DCCDatabase.News
 		/// of RFC 822 (http://asg.web.cmu.edu/rfc/rfc822.html), with the exception that the year may be 
 		/// expressed with two characters or four characters (four preferred).
 		/// </summary>
+		[UIHint("UI/Timestamp")]
 		public DateTime? PublishDate { get; set; }
+
+		/// <summary>Set the publish date according to timezone
+		/// </summary>
+		[UIHint("UI/Timestamp")]
+		[NotMapped]
+		public DateTime? PublishDateAdjusted { get; set; }
 
 		/// <summary>The last time the content of the channel changed.
 		/// </summary>
+		[UIHint("UI/Timestamp")]
 		public DateTime? LastBuildDate { get; set; }
+
+		/// <summary>Adjust the last build date according to timezone
+		/// </summary>
+		[UIHint("UI/Timestamp")]
+		[NotMapped]
+		public DateTime? LastBuildDateAdjusted { get; set; }
+
+		private string _contentType;
+
+		/// <summary>The content type of this rss feed
+		/// see ManagedFeed.ContentTypes for examples
+		/// </summary>
+		public string ContentType
+		{
+			get 
+			{
+				// get the default content type if null
+				_contentType = _contentType ?? ContentTypes[0];
+
+				// verify the content type is supported
+				if(!ContentTypes.Contains(_contentType))
+				{
+					// default to the first content type
+					_contentType = ContentTypes[0];
+				}
+				return _contentType; 
+			}
+			set { _contentType = value; }
+		}
+
+		/// <summary>All the content types supported
+		/// </summary>
+		public static readonly string[] ContentTypes = new string[] { "article", "video", "tacticstime" };
 
 		/// <summary>Specify one or more categories that the channel belongs to. Follows the same rules as the 
 		/// item-level category element. http://validator.w3.org/feed/docs/rss2.html#syndic8
@@ -139,8 +200,16 @@ namespace DCCDatabase.News
 
 		/// <summary>The default managed feed item
 		/// </summary>
-		public static ManagedFeed Default { get { return new ManagedFeed { PollRate = 15, Active = true }; } }
+		public static ManagedFeed Default { get { return new ManagedFeed { PollRate = MIN_POLL_RATE, Active = true }; } }
 
-		public DateTime NextPoll { get { return LastPolled.HasValue ? LastPolled.Value.AddMinutes(PollRate ?? DefaultPollRate) : DateTime.MinValue; } }
+		public DateTime NextPoll { get { return LastPolled.HasValue ? LastPolled.Value.AddMinutes(PollRate ?? MIN_POLL_RATE) : DateTime.MinValue; } }
+
+		/// <summary>flags whether the content of this feed is video
+		/// </summary>
+		public bool IsVideo { get { return ContentType == "video"; } }
+
+		/// <summary>flags whether the content of this feed is from Tim Brennan's Tactics Time
+		/// </summary>
+		public bool HeadlineOnly { get { return IsVideo || ContentType == "tacticstime"; } }
 	}
 }
