@@ -46,11 +46,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseDataModel.cs" />
+    <Compile Include="DatabaseConfiguration.cs" />
+    <Compile Include="ISearchable.cs" />
     <Compile Include="News\ManagedFeed.cs" />
     <Compile Include="News\NewsArticle.cs" />
     <Compile Include="News\RSSFeedItem.cs" />
     <Compile Include="News\RSSImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Store\StoreCategory.cs" />
+    <Compile Include="Store\StoreProduct.cs" />
+    <Compile Include="Store\Transaction.cs" />
+    <Compile Include="Store\TransactionItem.cs" />
     <Compile Include="User\DCCUser.cs" />
   </ItemGroup>
   <ItemGroup>

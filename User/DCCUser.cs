@@ -19,6 +19,8 @@ namespace DCCDatabase.User
 		public byte[] PasswordHash { get; set; }
 		public Guid? Salt { get; set; }
 
+		public DateTime? Expiration { get; set; }
+
 		public bool CheckPassword(string pass)
 		{
 			if (Salt.HasValue)
