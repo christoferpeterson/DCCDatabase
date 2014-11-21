@@ -1,5 +1,6 @@
 ﻿using DCCDatabase;
 using DCCDatabase.User;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
@@ -28,11 +29,20 @@ namespace DCCDatabase.News
 		/// </summary>
 		public string RawText { get; set; }
 
+		public Status State { get { return Status.Published; } }
+
 		/// <summary>Transformed markdown text
 		/// </summary>
 		[AllowHtml]
 		public string HtmlText { get; set; }
 
 		public DCCUser Author { get; set; }
+
+		[Flags]
+		public enum Status
+		{
+			Pending,
+			Published
+		}
 	}
 }
