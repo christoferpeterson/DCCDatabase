@@ -36,6 +36,10 @@ namespace DCCDatabase.News
 		[NotMapped]
 		public DateTime? LastPolledAdjusted { get; set; }
 
+		[Required]
+		[Display(Name = "Region", Description = "Local, Colorado, National, or International")]
+		public string Location { get; set; }
+
 		/// <summary>Determines how often the feed should be polled
 		/// </summary>
 		[Required]

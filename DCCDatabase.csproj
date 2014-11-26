@@ -93,6 +93,7 @@
   <ItemGroup>
     <Compile Include="BaseDataModel.cs" />
     <Compile Include="DatabaseConfiguration.cs" />
+    <Compile Include="Games\ChessGame.cs" />
     <Compile Include="ISearchable.cs" />
     <Compile Include="News\ManagedFeed.cs" />
     <Compile Include="News\NewsArticle.cs" />

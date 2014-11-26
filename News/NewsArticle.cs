@@ -38,6 +38,8 @@ namespace DCCDatabase.News
 
 		public DCCUser Author { get; set; }
 
+		public int Views { get; set; }
+
 		[Flags]
 		public enum Status
 		{
