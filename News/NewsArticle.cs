@@ -3,11 +3,22 @@ using DCCDatabase.User;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using System.Web;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DCCDatabase.News
 {
 	public class NewsArticle : BaseDataModel
 	{
+		[NotMapped]
+		[UIHint("ImageUpload")]
+		[Display(Name = "Image", Description = "Add a jpg or png image that is 250 kb or less")]
+		public HttpPostedFileBase Image { get; set; }
+
+		/// <summary>Image file name
+		/// </summary>
+		public string ImageName { get; set; }
+
 		[Display(Name = "Headline", Description = "Enter a descriptive, informative headline for the article.")]
 		[Required(ErrorMessage = "Please provide a headline for this news article.")]
 		[StringLength(64, MinimumLength = 5, ErrorMessage = "News headlines should be between 5 and 64 characters.")]
