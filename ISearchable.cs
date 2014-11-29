@@ -2,7 +2,7 @@
 {
 	public interface ISearchable
 	{
-		bool Hidden { get; set; }
+		bool Hidden { get; }
 		string Keywords { get; set; }
 		string GenerateKeywords();
 	}
