@@ -37,5 +37,7 @@ namespace DCCDatabase.Games
 
 		public string PGN { get; set; }
 		public bool Private { get; set; }
+
+		public int Views { get; set; }
 	}
 }
