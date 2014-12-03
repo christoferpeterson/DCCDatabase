@@ -33,8 +33,25 @@ namespace DCCDatabase.User
 
 		public string USCFNumber { get; set; }
 
+		/// <summary>Indicates the user must reset their password after login
+		/// </summary>
+		public bool ResetPassword { get; set; }
+
+		/// <summary>Indicates a generated account is not yet claimed
+		/// </summary>
+		public bool UnclaimedAccount { get; set; }
+
+		/// <summary>Date the user's dcc membership expires
+		/// </summary>
+		[Display(Name = "Expiration Date", Description = "When should this person's membership expire?")]
+		public DateTime? Expiration { get; set; }
+
+		/// <summary>salted hash of user's password
+		/// </summary>
 		public byte[] PasswordHash { get; set; }
 
+		/// <summary>user type (for entitlements)
+		/// </summary>
 		public int UserType { get; set; }
 
 		[NotMapped]
