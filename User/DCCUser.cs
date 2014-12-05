@@ -8,7 +8,7 @@ namespace DCCDatabase.User
 {
 	public enum Entitlement
 	{
-		None = 0,
+		Guest = 0,
 		/// <summary>This user has verified their email address
 		/// </summary>
 		Verified = 1 << 0,
