@@ -54,6 +54,8 @@ namespace DCCDatabase.User
 		/// </summary>
 		public int UserType { get; set; }
 
+		public DateTime? LastLogon { get; set; }
+
 		[NotMapped]
 		public Entitlement Entitlements { get { return (Entitlement)UserType; } set { UserType = (int)value; } }
 

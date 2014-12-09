@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DCCDatabase.User;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -8,6 +9,10 @@ namespace DCCDatabase.Store
 	{
 		private static double rnExponent = 2.732;
 		private static int rnStart = new Random().Next(0, 1000);
+
+		/// <summary>Which user made this transaction?
+		/// </summary>
+		public DCCUser User { get; set; }
 
 		/// <summary>The name on the card
 		/// </summary>
