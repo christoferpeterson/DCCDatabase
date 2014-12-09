@@ -16,9 +16,9 @@ namespace DCCDatabase.News
 		[Flags]
 		public enum Status
 		{
-			Deleted,
-			Pending,
-			Published,
+			Deleted = 1 << 0,
+			Pending = 1 << 1,
+			Published = 1 << 2,
 
 			Hidden = Deleted | Pending
 		}

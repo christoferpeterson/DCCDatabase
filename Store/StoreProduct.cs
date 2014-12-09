@@ -1,17 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace DCCDatabase.Store
 {
 	public class StoreProduct : BaseDataModel, ISearchable
 	{
+		/// <summary>Uploaded file of the image
+		/// </summary>
+		[NotMapped]
+		[UIHint("ImageUpload")]
+		[Display(Name = "Image", Description = "Add a jpg or png image that is 250 kb or less")]
+		public HttpPostedFileBase Image { get; set; }
+
+		/// <summary>Image file name
+		/// </summary>
+		public string ImageName { get; set; }
+
 		[Required(ErrorMessage = "Please provide a category name.")]
-		[StringLength(20, MinimumLength = 3, ErrorMessage = "Item names must be between 3 and 20 characters in length.")]
+		[StringLength(64, MinimumLength = 3, ErrorMessage = "Item names must be between 3 and 64 characters in length.")]
 		[Display(Name = "Name", Description = "Enter a name for this product.", Prompt = "Purple Chess Board")]
 		public string Name { get; set; }
 
