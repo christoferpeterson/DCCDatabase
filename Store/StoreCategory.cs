@@ -20,7 +20,7 @@ namespace DCCDatabase.Store
 
 		[Display(Name = "Hide this category from searches")]
 		[UIHint("Checkbox")]
-		public bool Hidden{ get; set; }
+		public bool Published { get; set; }
 
 		public IEnumerable<StoreProduct> Products { get; set; }
 

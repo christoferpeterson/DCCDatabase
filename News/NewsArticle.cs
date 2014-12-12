@@ -13,15 +13,11 @@ namespace DCCDatabase.News
 {
 	public class NewsArticle : BaseDataModel, ISearchable
 	{
-		[Flags]
-		public enum Status
-		{
-			Deleted = 1 << 0,
-			Pending = 1 << 1,
-			Published = 1 << 2,
-
-			Hidden = Deleted | Pending
-		}
+		/// <summary>True = published, false = pending, null = deleted
+		/// </summary>
+		[UIHint("Checkbox")]
+		[Display(Name = "Published", Description = "Publish this product in the store.")]
+		public bool Published { get; set; }
 
 		/// <summary>Uploaded file of the image
 		/// </summary>
@@ -61,10 +57,6 @@ namespace DCCDatabase.News
 		/// </summary>
 		public string RawText { get; set; }
 
-		/// <summary>Current state of the article
-		/// </summary>
-		public Status State { get { return Status.Published; } }
-
 		/// <summary>Transformed markdown text
 		/// </summary>
 		[AllowHtml]
@@ -77,11 +69,6 @@ namespace DCCDatabase.News
 		/// <summary>Number of fews this article has
 		/// </summary>
 		public int Views { get; set; }
-
-		/// <summary>Determines if the article should be hidden from searches
-		/// </summary>
-		[NotMapped]
-		public bool Hidden { get { return State.HasFlag(Status.Hidden); } }
 
 		/// <summary>Keywords as calcualted from the article's most used words
 		/// </summary>

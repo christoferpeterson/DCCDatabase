@@ -12,6 +12,13 @@ namespace DCCDatabase.Store
 {
 	public class StoreProduct : BaseDataModel, ISearchable
 	{
+
+		/// <summary>True = published, false = pending, null = deleted
+		/// </summary>
+		[UIHint("Checkbox")]
+		[Display(Name = "Published", Description = "Publish this product in the store.")]
+		public bool Published { get; set; }
+
 		/// <summary>Uploaded file of the image
 		/// </summary>
 		[NotMapped]
@@ -36,10 +43,7 @@ namespace DCCDatabase.Store
 			Prompt = "Use markdown to write up a rich text description of this product or service."
 		)]
 		public string Description { get; set; }
-
-		[Display(Name = "Hide this category from searches")]
-		public bool Hidden { get; set; }
-
+		
 		/// <summary>The price of the item
 		/// </summary>
 		[Display(Name = "Price", Description = "What is the price of this product or service?", Prompt = "9.99")]
