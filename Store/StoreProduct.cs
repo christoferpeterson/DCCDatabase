@@ -7,11 +7,16 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Mvc;
 
 namespace DCCDatabase.Store
 {
 	public class StoreProduct : BaseDataModel, ISearchable
 	{
+		public Guid Guid { get; set; }
+
+		public ShortGuid ShortGuid { get { return (ShortGuid)Guid; } }
+
 
 		/// <summary>True = published, false = pending, null = deleted
 		/// </summary>
@@ -43,6 +48,11 @@ namespace DCCDatabase.Store
 			Prompt = "Use markdown to write up a rich text description of this product or service."
 		)]
 		public string Description { get; set; }
+
+		/// <summary>Transformed markdown text
+		/// </summary>
+		[AllowHtml]
+		public string HtmlText { get; set; }
 		
 		/// <summary>The price of the item
 		/// </summary>
