@@ -108,6 +108,7 @@
     <Compile Include="Store\StoreProduct.cs" />
     <Compile Include="Store\Transaction.cs" />
     <Compile Include="Store\TransactionItem.cs" />
+    <Compile Include="Tournament\TournamentRegistration.cs" />
     <Compile Include="User\DCCUser.cs" />
   </ItemGroup>
   <ItemGroup>

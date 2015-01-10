@@ -9,6 +9,7 @@ namespace DCCDatabase.Store
 {
 	public class TransactionItem : BaseDataModel
 	{
+		public StoreProduct Product { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
 
