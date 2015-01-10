@@ -59,6 +59,10 @@ namespace DCCDatabase.User
 		[NotMapped]
 		public Entitlement Entitlements { get { return (Entitlement)UserType; } set { UserType = (int)value; } }
 
+		/// <summary>Allows the DCC to send emails to users regarding upcoming events, news, and other important information
+		/// </summary>
+		public bool AllowEmails { get; set; }
+
 		private Guid? _salt;
 
 		public Guid? Salt
