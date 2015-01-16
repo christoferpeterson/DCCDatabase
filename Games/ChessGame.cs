@@ -19,7 +19,11 @@ namespace DCCDatabase.Games
 		/// </summary>
 		public short OldID { get; set; }
 
+		[ForeignKey("CreatedByID")]
+		[NotMapped]
 		public DCCUser CreatedBy { get; set; }
+
+		public int? CreatedByID { get; set; }
 
 		public string Event { get; set; }
 		public string Site { get; set; }
