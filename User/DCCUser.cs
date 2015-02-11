@@ -46,6 +46,13 @@ namespace DCCDatabase.User
 		[Display(Name = "Expiration Date", Description = "When should this person's membership expire?")]
 		public DateTime? Expiration { get; set; }
 
+		public string Status { get { return MembershipStatus(); } }
+
+		private string MembershipStatus()
+		{
+			return Expiration.HasValue ? (Expiration > DateTime.UtcNow ? "Current" : "Expired") : "Non-member";
+		}
+
 		/// <summary>salted hash of user's password
 		/// </summary>
 		public byte[] PasswordHash { get; set; }
