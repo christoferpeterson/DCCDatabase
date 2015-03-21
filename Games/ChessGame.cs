@@ -57,5 +57,30 @@ namespace DCCDatabase.Games
 		public bool Private { get; set; }
 
 		public int Views { get; set; }
+
+		public ChessGame(GameSearchOutput game)
+		{
+			if (game == null)
+				return;
+
+			ID = game.ID;
+			White = game.White;
+			Black = game.Black;
+			White_ELO = game.White_ELO;
+			Black_ELO = game.Black_ELO;
+			Date = game.Date;
+		}
+	}
+
+
+	public class GameSearchOutput
+	{
+		public int? ID { get; set; }
+		public int? TotalResults { get; set; }
+		public string White { get; set; }
+		public string Black { get; set; }
+		public int? White_ELO { get; set; }
+		public int? Black_ELO { get; set; }
+		public DateTime? Date { get; set; }
 	}
 }

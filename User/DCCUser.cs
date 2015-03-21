@@ -6,6 +6,7 @@ using System.Text;
 
 namespace DCCDatabase.User
 {
+	[Flags]
 	public enum Entitlement
 	{
 		Guest = 0,
@@ -22,7 +23,7 @@ namespace DCCDatabase.User
 	{
 		[Required(ErrorMessage = "Please enter an email address")]
 		[DataType(DataType.EmailAddress, ErrorMessage = "Please enter a valid email address")]
-		[Display(Name = "Email Address", Description = "Your email will be used to identify you when you log in or recover your account. Emails will not be shared with third parties.")]
+		[Display(Name = "Email Address", Description = "Your email will be used to identify you when you log in or recover your account. Emails will not be shared with third parties and will not be listed publically.")]
 		public string Email { get; set; }
 
 		[StringLength(64, ErrorMessage = "Cannot be more than 64 characters")]
@@ -31,6 +32,7 @@ namespace DCCDatabase.User
 
 		public string ConfirmationCode { get; set; }
 
+		[Display(Name = "USCF #", Description = "USCF numbers are used to determine the status of users with the United States Chess Federation. USCF membership is required to participate in rated events.")]
 		public string USCFNumber { get; set; }
 
 		/// <summary>Indicates the user must reset their password after login
@@ -158,6 +160,12 @@ namespace DCCDatabase.User
 			}
 
 			return true;
+		}
+
+
+		public bool IsEntitled(Entitlement entitlement)
+		{
+			return (Entitlements & entitlement) == entitlement;
 		}
 	}
 }
