@@ -6,6 +6,18 @@ using System.Text;
 
 namespace DCCDatabase.User
 {
+	public interface IDCCUser : IData
+	{
+		string Email { get; set; }
+		string Name { get; set; }
+		string USCFNumber { get; set; }
+		bool UnclaimedAccount { get; set; }
+		DateTime? Expiration { get; set; }
+		Entitlement Entitlements { get; set; }
+		DateTime? LastLogon { get; set; }
+		bool AllowEmails { get; set; }
+	}
+
 	[Flags]
 	public enum Entitlement
 	{
@@ -19,7 +31,7 @@ namespace DCCDatabase.User
 		Administrator = 1 << 7
 	}
 
-	public class DCCUser : BaseDataModel
+	public class DCCUser : BaseDataModel, IDCCUser
 	{
 		[Required(ErrorMessage = "Please enter an email address")]
 		[DataType(DataType.EmailAddress, ErrorMessage = "Please enter a valid email address")]
@@ -167,5 +179,23 @@ namespace DCCDatabase.User
 		{
 			return (Entitlements & entitlement) == entitlement;
 		}
+	}
+
+	public class UserSearchOutput : IDCCUser
+	{
+		public int? TotalResults { get; set; }
+		public int? ID { get; set; }
+		public string Email { get; set; }
+		public string Name { get; set; }
+		public string USCFNumber { get; set; }
+		public bool UnclaimedAccount { get; set; }
+		public DateTime? Expiration { get; set; }
+		public Entitlement Entitlements { get { return (Entitlement)UserType; } set { UserType = (int)value; } }
+		public DateTime? LastLogon { get; set; }
+		public DateTime? Created { get; set; }
+		public DateTime? Modified { get; set; }
+		public DCCUser ModifiedBy { get; set; }
+		public bool AllowEmails { get; set; }
+		public int? UserType { get; set; }
 	}
 }

@@ -1,7 +1,4 @@
-﻿USE [DenverChessClub-Development]
-GO
-
-DROP PROCEDURE [dbo].SearchChessGames
+﻿DROP PROCEDURE [dbo].SearchChessGames
 GO
 
 CREATE PROCEDURE

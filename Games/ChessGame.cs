@@ -58,6 +58,11 @@ namespace DCCDatabase.Games
 
 		public int Views { get; set; }
 
+		public ChessGame()
+		{
+
+		}
+
 		public ChessGame(GameSearchOutput game)
 		{
 			if (game == null)

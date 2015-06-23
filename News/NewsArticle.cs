@@ -34,7 +34,7 @@ namespace DCCDatabase.News
 		/// </summary>
 		[Display(Name = "Headline", Description = "Enter a descriptive, informative headline for the article.")]
 		[Required(ErrorMessage = "Please provide a headline for this news article.")]
-		[StringLength(64, MinimumLength = 5, ErrorMessage = "News headlines should be between 5 and 64 characters.")]
+		//[StringLength(64, MinimumLength = 5, ErrorMessage = "News headlines should be between 5 and 64 characters.")]
 		public string Headline { get; set; }
 
 		/// <summary>The raw text of the news article including markdown
@@ -49,7 +49,7 @@ namespace DCCDatabase.News
 		/// </summary>
 		[Display(Name = "Teaser", Description = "A synopsis of the article to give a brief overview of content and entice readers.")]
 		[Required(ErrorMessage = "Provide a quick synopsis of the article to entice readers.")]
-		[StringLength(255, MinimumLength = 5, ErrorMessage = "News teasers should be between 5 and 255 characters.")]
+		//[StringLength(255, MinimumLength = 5, ErrorMessage = "News teasers should be between 5 and 255 characters.")]
 		[DataType(DataType.MultilineText)]
 		public string Teaser { get; set; }
 

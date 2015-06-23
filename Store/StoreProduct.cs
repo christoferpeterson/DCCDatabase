@@ -1,16 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
 namespace DCCDatabase.Store
 {
+	/// <summary>Interface that outlines how a store service should be put together
+	/// </summary>
+	public interface IStoreService
+	{
+		bool Success { get; }
+		void Prepare();
+		void Init();
+		void Load();
+
+		/// <summary>Serialized collection of service parameters
+		/// </summary>
+		/// <returns>json string</returns>
+		string ServiceParameters();
+
+		/// <summary>Serialized collection of user inputs
+		/// </summary>
+		/// <returns>json string</returns>
+		string UserInputs();
+	}
+
 	public class StoreProduct : BaseDataModel, ISearchable
 	{
 		public Guid Guid { get; set; }
@@ -69,9 +86,25 @@ namespace DCCDatabase.Store
 		[DataType("Checkbox")]
 		public bool DCCMembersOnly { get; set; }
 
+		[Display(Name = "User Must be Logged In", Description = "This item requires the user to be logged into their account.")]
+		[DataType("Checkbox")]
+		public bool LoggedInOnly { get; set; }
+
 		[Display(Name = "Requires Address", Description = "Check this box if the item needs to be shipped to the customer.")]
 		[DataType("Checkbox")]
 		public bool RequiresAddress { get; set; }
+
+		/// <summary>The service to run when this item gets processed
+		/// <see cref="StoreService.cs"/>
+		/// </summary>
+		public string Service { get; set; }
+
+		/// <summary>Additional information about the service, json serialized
+		/// </summary>
+		public string ServiceParameters { get; set; }
+
+		[NotMapped]
+		public IStoreService ServiceDetails { get; set; }
 
 		private string _keywords;
 		public string Keywords

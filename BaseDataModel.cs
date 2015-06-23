@@ -5,7 +5,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DCCDatabase
 {
-	public abstract class BaseDataModel
+	public interface IData
+	{
+		int? ID { get; set; }
+		DateTime? Created { get; set; }
+		DateTime? Modified { get; set; }
+		DCCUser ModifiedBy { get; set; }
+	}
+
+	public abstract class BaseDataModel : IData
 	{
 		/// <summary>The unique ID for this item
 		/// </summary>
