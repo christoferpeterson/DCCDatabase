@@ -12,6 +12,7 @@ namespace DCCDatabase.Store
 	/// </summary>
 	public interface IStoreService
 	{
+		Transaction Transaction { get; set; }
 		bool Success { get; }
 		void Prepare();
 		void Init();
