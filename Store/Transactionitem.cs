@@ -10,9 +10,15 @@ namespace DCCDatabase.Store
 {
 	public class TransactionItem : BaseDataModel
 	{
+		[ForeignKey("Product")]
+		public int? Product_ID { get; set; }
+
 		public StoreProduct Product { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
+
+		[NotMapped]
+		public StoreProduct Service { get; set; }
 
 		/// <summary>The number of items
 		/// </summary>

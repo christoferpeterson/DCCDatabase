@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -95,6 +96,25 @@ namespace DCCDatabase.Store
 		[DataType("Checkbox")]
 		public bool RequiresAddress { get; set; }
 
+		private string serviceDescription;
+
+		[NotMapped]
+		public string ServiceDescription
+		{
+			get { serviceDescription = serviceDescription ?? GetServiceDescription(); return serviceDescription; }
+		}
+
+		private string GetServiceDescription()
+		{
+			if (Service == "extend_membership")
+			{
+				return String.Format("Adds a {0} month membership extension to your online account.", Parameters["Months"]);
+			}
+
+			return String.Empty;
+		}
+		
+
 		/// <summary>The service to run when this item gets processed
 		/// <see cref="StoreService.cs"/>
 		/// </summary>
@@ -103,6 +123,17 @@ namespace DCCDatabase.Store
 		/// <summary>Additional information about the service, json serialized
 		/// </summary>
 		public string ServiceParameters { get; set; }
+
+		private Dictionary<string, object> _parameters;
+		[NotMapped]
+		public Dictionary<string, object> Parameters 
+		{ 
+			get
+			{ 
+				_parameters = _parameters ?? ServiceParameters.Deserialize<Dictionary<string, object>>(); 
+				return _parameters; 
+			} 
+		}
 
 		[NotMapped]
 		public IStoreService ServiceDetails { get; set; }

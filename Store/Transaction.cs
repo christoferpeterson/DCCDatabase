@@ -16,7 +16,6 @@ namespace DCCDatabase.Store
 
 		/// <summary>The name on the card
 		/// </summary>
-		[Required]
 		public string NameOnCard { get; set; }
 
 		[Required]
@@ -24,7 +23,6 @@ namespace DCCDatabase.Store
 
 		/// <summary>The total cost of the transaction
 		/// </summary>
-		[Required]
 		public double Total { get; set; }
 
 		private int? _receiptNumber;
@@ -33,7 +31,11 @@ namespace DCCDatabase.Store
 		/// </summary>
 		public int ReceiptNumber
 		{
-			get { _receiptNumber = _receiptNumber ?? (int)(Created.Value.ToOADate() * 1000 + Math.Ceiling(Math.Pow(rnStart, rnExponent))); return _receiptNumber.Value; }
+			get { 
+				_receiptNumber = _receiptNumber ?? 
+				(int)(DateTime.UtcNow.ToOADate() * 1000 + Math.Ceiling(Math.Pow(rnStart, rnExponent))); 
+				return _receiptNumber.Value; 
+		}
 			set { _receiptNumber = value; }
 		}
 
@@ -47,7 +49,6 @@ namespace DCCDatabase.Store
 
 		/// <summary>The billing address of the customer (for cc verification and auditing)
 		/// </summary>
-		[Required]
 		public string BillingAddress { get; set; }
 
 		public ICollection<TransactionItem> Items { get; set; }
