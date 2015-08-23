@@ -19,6 +19,8 @@ namespace DCCDatabase.Store
 		void Init();
 		void Load();
 
+		void SetParameters(Dictionary<string, object> parameters);
+
 		/// <summary>Serialized collection of service parameters
 		/// </summary>
 		/// <returns>json string</returns>

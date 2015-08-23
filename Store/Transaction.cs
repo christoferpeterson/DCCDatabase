@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DCCDatabase.Store
 {
@@ -9,6 +10,9 @@ namespace DCCDatabase.Store
 	{
 		private static double rnExponent = 2.732;
 		private static int rnStart = new Random().Next(0, 1000);
+
+		[ForeignKey("User")]
+		public int? User_ID { get; set; }
 
 		/// <summary>Which user made this transaction?
 		/// </summary>
@@ -25,6 +29,11 @@ namespace DCCDatabase.Store
 		/// </summary>
 		public double Total { get; set; }
 
+		public double Subtotal { get; set; }
+		public double TransactionFee { get; set; }
+		public DateTime? Paid { get; set; }
+		public string StripeID { get; set; }
+
 		private int? _receiptNumber;
 
 		/// <summary>To be calculated. Math.Ceiling(( + id)^2.7);
@@ -33,7 +42,7 @@ namespace DCCDatabase.Store
 		{
 			get { 
 				_receiptNumber = _receiptNumber ?? 
-				(int)(DateTime.UtcNow.ToOADate() * 1000 + Math.Ceiling(Math.Pow(rnStart, rnExponent))); 
+				(int)(DateTime.UtcNow.ToOADate() * 10000 + Math.Ceiling(Math.Pow(rnStart, rnExponent))); 
 				return _receiptNumber.Value; 
 		}
 			set { _receiptNumber = value; }

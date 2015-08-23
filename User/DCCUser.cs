@@ -62,6 +62,8 @@ namespace DCCDatabase.User
 
 		public string Status { get { return MembershipStatus(); } }
 
+		public bool IsMember { get { return Expiration > DateTime.Now; } }
+
 		private string MembershipStatus()
 		{
 			return Expiration.HasValue ? (Expiration > DateTime.UtcNow ? "Current" : "Expired") : "Non-member";
