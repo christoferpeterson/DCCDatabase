@@ -60,8 +60,12 @@ namespace DCCDatabase.User
 		[Display(Name = "Expiration Date", Description = "When should this person's membership expire?")]
 		public DateTime? Expiration { get; set; }
 
+		// get a display friendly membership status
 		public string Status { get { return MembershipStatus(); } }
 
+
+		/// <summary>User is a current member of the denver chess club
+		/// </summary>
 		public bool IsMember { get { return Expiration > DateTime.Now; } }
 
 		private string MembershipStatus()
