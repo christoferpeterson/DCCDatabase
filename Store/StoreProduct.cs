@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DCCDatabase.User;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using Translucent.Extensions;
 
 namespace DCCDatabase.Store
 {
@@ -38,6 +40,8 @@ namespace DCCDatabase.Store
 
 		public ShortGuid ShortGuid { get { return (ShortGuid)Guid; } }
 
+		[NotMapped]
+		public DCCUser AffectedUser { get; set; }
 
 		/// <summary>True = published, false = pending, null = deleted
 		/// </summary>
@@ -116,6 +120,21 @@ namespace DCCDatabase.Store
 			return String.Empty;
 		}
 		
+
+		public string GetFilledServiceDescription()
+		{
+			if (Service == "extend_membership")
+			{
+				int temp;
+				int months = int.TryParse(Parameters["Months"].ToString(), out temp) ? temp : 0;
+
+				var expiration = DateTimeExtensions.Max(DateTime.UtcNow, AffectedUser.Expiration);
+				expiration = AffectedUser.Expiration.Value.AddMonths(months);
+				return String.Format("Extend the Denver Chess Club membership of {0} by {1} months. New expiration date: {2:MMMM dd, yyyy}.", AffectedUser.Name, months, expiration);
+			}
+
+			return String.Empty;
+		}
 
 		/// <summary>The service to run when this item gets processed
 		/// <see cref="StoreService.cs"/>
