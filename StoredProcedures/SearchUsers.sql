@@ -26,9 +26,9 @@ AS
 			set @limit = 25;
 		END
 
-		IF @limit > 100
+		IF @limit > 50000
 		BEGIN
-			set @limit = 100;
+			set @limit = 50000;
 		END
 
 		IF @limit < 1

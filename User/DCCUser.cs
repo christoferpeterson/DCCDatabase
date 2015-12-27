@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Cryptography;
@@ -189,19 +190,28 @@ namespace DCCDatabase.User
 
 	public class UserSearchOutput : IDCCUser
 	{
+		[JsonIgnore]
 		public int? TotalResults { get; set; }
+		public string USCFNumber { get; set; }
 		public int? ID { get; set; }
 		public string Email { get; set; }
 		public string Name { get; set; }
-		public string USCFNumber { get; set; }
+
+		[JsonIgnore]
 		public bool UnclaimedAccount { get; set; }
 		public DateTime? Expiration { get; set; }
 		public Entitlement Entitlements { get { return (Entitlement)UserType; } set { UserType = (int)value; } }
 		public DateTime? LastLogon { get; set; }
 		public DateTime? Created { get; set; }
+
+		[JsonIgnore]
 		public DateTime? Modified { get; set; }
+
+		[JsonIgnore]
 		public DCCUser ModifiedBy { get; set; }
 		public bool AllowEmails { get; set; }
+
+		[JsonIgnore]
 		public int? UserType { get; set; }
 	}
 }

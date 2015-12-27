@@ -129,7 +129,7 @@ namespace DCCDatabase.Store
 				int months = int.TryParse(Parameters["Months"].ToString(), out temp) ? temp : 0;
 
 				var expiration = DateTimeExtensions.Max(DateTime.UtcNow, AffectedUser.Expiration);
-				expiration = AffectedUser.Expiration.Value.AddMonths(months);
+				expiration = expiration.Value.AddMonths(months);
 				return String.Format("Extend the Denver Chess Club membership of {0} by {1} months. New expiration date: {2:MMMM dd, yyyy}.", AffectedUser.Name, months, expiration);
 			}
 
