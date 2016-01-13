@@ -147,13 +147,14 @@ namespace DCCDatabase.Store
 
 		private Dictionary<string, object> _parameters;
 		[NotMapped]
-		public Dictionary<string, object> Parameters 
-		{ 
+		public Dictionary<string, object> Parameters
+		{
 			get
-			{ 
-				_parameters = _parameters ?? ServiceParameters.Deserialize<Dictionary<string, object>>(); 
-				return _parameters; 
-			} 
+			{
+				_parameters = _parameters ?? ServiceParameters.Deserialize<Dictionary<string, object>>();
+				return _parameters;
+			}
+			set { _parameters = value; ServiceParameters = value.Serialize(); }
 		}
 
 		[NotMapped]
