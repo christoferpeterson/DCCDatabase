@@ -21,7 +21,7 @@ namespace DCCDatabase.Store
 		void Init();
 		void Load();
 
-		void SetParameters(Dictionary<string, object> parameters);
+		void SetParameters(Dictionary<string, string> parameters);
 
 		/// <summary>Serialized collection of service parameters
 		/// </summary>
@@ -128,9 +128,21 @@ namespace DCCDatabase.Store
 				int temp;
 				int months = int.TryParse(Parameters["Months"].ToString(), out temp) ? temp : 0;
 
-				var expiration = DateTimeExtensions.Max(DateTime.UtcNow, AffectedUser.Expiration);
-				expiration = expiration.Value.AddMonths(months);
+				var currentDate = DateTimeExtensions.Max(DateTime.UtcNow, AffectedUser.Expiration).Value;
+				var newDate = currentDate.AddMonths(months + 1);
+
+				var expiration = new DateTime(newDate.Year, newDate.Month, 1).AddSeconds(-1);
+
 				return String.Format("Extend the Denver Chess Club membership of {0} by {1} months. New expiration date: {2:MMMM dd, yyyy}.", AffectedUser.Name, months, expiration);
+			}
+
+			if (Service == "class_registration")
+			{
+				return string.Format(
+					"Tickets for {0} to attend {1} half day(s) of Denver Chess Club classes.",
+					Parameters["Name"],
+					Parameters["Count"]
+				);
 			}
 
 			return String.Empty;
@@ -145,13 +157,13 @@ namespace DCCDatabase.Store
 		/// </summary>
 		public string ServiceParameters { get; set; }
 
-		private Dictionary<string, object> _parameters;
+		private Dictionary<string, string> _parameters;
 		[NotMapped]
-		public Dictionary<string, object> Parameters
+		public Dictionary<string, string> Parameters
 		{
 			get
 			{
-				_parameters = _parameters ?? ServiceParameters.Deserialize<Dictionary<string, object>>();
+				_parameters = _parameters ?? ServiceParameters.Deserialize<Dictionary<string, string>>();
 				return _parameters;
 			}
 			set { _parameters = value; ServiceParameters = value.Serialize(); }
