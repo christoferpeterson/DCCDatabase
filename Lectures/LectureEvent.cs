@@ -8,10 +8,24 @@ using System.Threading.Tasks;
 
 namespace DCCDatabase.Lectures
 {
+
+	public interface ILectureEvent
+	{
+		Guid? Id { get; set; }
+		DateTime? Start { get; set; }
+		DateTime? End { get; set; }
+		string Presenter { get; set; }
+		string Description { get; set; }
+		string Location { get; set; }
+		int? StatusId { get; set; }
+	}
+
 	/// <summary>Inputs to create a new lecture event
 	/// </summary>
-	public class LectureEventCreate : IValidatableObject
+	public class LectureEventEditor : IValidatableObject, ILectureEvent
 	{
+		public Guid? Id { get; set; }
+
 		[Required(ErrorMessage = "Enter the date and time of the lecture's start.")]
 		[Display(Name = "Start Time", Description = "Date and time the lecture starts, must be before the end time.")]
 		public DateTime? Start { get; set; }
@@ -32,7 +46,7 @@ namespace DCCDatabase.Lectures
 		[Display(Description = "Where will the lecture be held?")]
 		public string Location { get; set; }
 
-
+		public int? StatusId { get; set; }
 
 		public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
 		{
@@ -50,23 +64,30 @@ namespace DCCDatabase.Lectures
 
 			return validationResults;
 		}
-	}
 
-	/// <summary>Inputs to update a lecture event
-	/// </summary>
-	public class LectureEventUpdate
-	{
-		public Guid? Id { get; set; }
-		public DateTime? Start { get; set; }
-		public DateTime? End { get; set; }
-		public string Presenter { get; set; }
-		public string Description { get; set; }
-		public string Location { get; set; }
+		public static implicit operator LectureEventEditor(LectureEvent l)
+		{
+			if(l == null)
+			{
+				return null;
+			}
+
+			return new LectureEventEditor
+			{
+				Id = l.Id,
+				Start = l.Start,
+				End = l.End,
+				Location = l.Location,
+				Description = l.Description,
+				Presenter = l.Presenter,
+				StatusId = l.StatusId
+			};
+		}
 	}
 
 	/// <summary>Individual transaction that modified a lecture event
 	/// </summary>
-	public class LectureEventHistory
+	public class LectureEventHistory : ILectureEvent
 	{
 		public Guid? Id { get; set; }
 		public DateTime? Start { get; set; }
@@ -82,7 +103,7 @@ namespace DCCDatabase.Lectures
 
 	/// <summary>The current iteration of a lecture event
 	/// </summary>
-	public class LectureEvent
+	public class LectureEvent : ILectureEvent
 	{
 		public Guid? Id { get; set; }
 
