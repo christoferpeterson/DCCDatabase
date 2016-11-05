@@ -103,6 +103,7 @@
     <Compile Include="DatabaseConfiguration.cs" />
     <Compile Include="Games\ChessGame.cs" />
     <Compile Include="ISearchable.cs" />
+    <Compile Include="Lectures\LectureEvent.cs" />
     <Compile Include="News\ManagedFeed.cs" />
     <Compile Include="News\NewsArticle.cs" />
     <Compile Include="News\RSSFeedItem.cs" />
@@ -131,8 +132,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="StoredProcedures\rss_news_view.sql" />
     <Content Include="StoredProcedures\SearchChessGames.sql" />
     <Content Include="StoredProcedures\SearchUsers.sql" />
+    <Content Include="StoredProcedures\search_games_view.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
