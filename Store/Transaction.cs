@@ -61,5 +61,26 @@ namespace DCCDatabase.Store
 		public string BillingAddress { get; set; }
 
 		public ICollection<TransactionItem> Items { get; set; }
+
+		public string Description { get { return GetDescription(); } }
+
+		private string GetDescription()
+		{
+			var output = new List<string>();
+
+			if (Items != null)
+			{
+				foreach (var item in Items)
+				{
+					output.Add(string.Format("{0}x {1}", item.Quantity, item.Description));
+				}
+			}
+			else
+			{
+				output.Add("No items attached to transaction>");
+			}
+
+			return string.Join("\r\n", output.ToArray());
+		}
 	}
 }
